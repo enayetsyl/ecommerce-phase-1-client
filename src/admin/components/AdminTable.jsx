@@ -50,6 +50,9 @@ const AdminTable = () => {
   return (
     <div className="my-12 overflow-x-auto h-[700px] md:h-auto">
       <div className="container">
+        <h2 className="text-center font-bold text-3xl md:text-5xl mb-12">
+          Manage Products
+        </h2>
         {isLoading ? (
           <div className="flex justify-center items-center text-center w-full my-20">
             <GridLoader color="#36d7b7" size={50} />

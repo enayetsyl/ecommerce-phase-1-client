@@ -8,7 +8,6 @@ import logo from '../assets/logo.png';
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
 
   const [active, setActive] = useState(pathname);
   const [open, setIsOpen] = useState(false);
