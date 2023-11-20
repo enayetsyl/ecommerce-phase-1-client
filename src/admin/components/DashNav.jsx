@@ -14,7 +14,7 @@ const DashNav = () => {
   console.log(active);
 
   return (
-    <div className="bg-white shadow w-full text-4xl relative py-3">
+    <div className="bg-white shadow w-full text-4xl relative py-3 font-[poppins]">
       <div className="container">
         <div className="flex justify-between items-center">
           {/* logo */}
@@ -23,7 +23,7 @@ const DashNav = () => {
           </div>
           {/* nav */}
           {/* desktop navigation */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <ul className="flex gap-x-4 text-base uppercase">
               <Link
                 to="/dashboard"
@@ -73,10 +73,31 @@ const DashNav = () => {
                   </ul>
                 </div>
               </Link>
+              <Link
+                to="/dashboard/all-blogs"
+                onClick={() => setActive('all-blogs')}
+                className={`${active === 'all-blogs' && 'font-bold'}`}
+              >
+                <li>All Blogs</li>
+              </Link>
+              <Link
+                to="/dashboard/add-blog"
+                onClick={() => setActive('add-blog')}
+                className={`${active === 'add-blog' && 'font-bold'}`}
+              >
+                <li>Add Blog</li>
+              </Link>
+              <Link
+                to="/dashboard/user-details"
+                onClick={() => setActive('user-details')}
+                className={`${active === 'user-details' && 'font-bold'}`}
+              >
+                <li>User Details</li>
+              </Link>
             </ul>
           </div>
           {/* mobile navigation hamburger menu */}
-          <div className="block md:hidden">
+          <div className="block lg:hidden">
             <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
               <GiHamburgerMenu />
             </div>
@@ -87,7 +108,7 @@ const DashNav = () => {
       <div
         className={`${
           open ? 'translate-x-0' : 'translate-x-full'
-        } block md:hidden transition duration-200 absolute h-screen w-screen bg-white top-0 right-0 z-50`}
+        } block lg:hidden transition duration-200 absolute h-screen w-screen bg-white top-0 right-0 z-50`}
       >
         <div
           className="absolute top-4 right-5 cursor-pointer"
@@ -139,6 +160,27 @@ const DashNav = () => {
               className={`${active === 'completed' && 'font-bold'}`}
             >
               <li>Completed</li>
+            </Link>
+            <Link
+              to="/dashboard/all-blogs"
+              onClick={() => setActive('all-blogs')}
+              className={`${active === 'all-blogs' && 'font-bold'}`}
+            >
+              <li>All Blogs</li>
+            </Link>
+            <Link
+              to="/dashboard/add-blog"
+              onClick={() => setActive('add-blog')}
+              className={`${active === 'add-blog' && 'font-bold'}`}
+            >
+              <li>Add Blog</li>
+            </Link>
+            <Link
+              to="/dashboard/user-details"
+              onClick={() => setActive('user-details')}
+              className={`${active === 'user-details' && 'font-bold'}`}
+            >
+              <li>User Details</li>
             </Link>
           </ul>
         </div>

@@ -12,6 +12,8 @@ import Contact from '../pages/Contact';
 
 // admin routes
 import Dashboard from '../admin/pages/Dashboard';
+import Login from '../admin/pages/Login';
+import Register from '../admin/pages/Register';
 import AddProduct from '../admin/pages/AddProduct';
 import EditProduct from '../admin/pages/EditProduct';
 import AllProducts from '../admin/pages/AllProducts';
@@ -25,6 +27,7 @@ import EditOrder from '../admin/pages/EditOrder';
 import AllBlogs from '../admin/pages/AllBlogs';
 import AddBlog from '../admin/pages/AddBlog';
 import EditBlog from '../admin/pages/EditBlog';
+import UserDetails from '../admin/pages/UserDetails';
 
 const router = createBrowserRouter([
   {
@@ -70,8 +73,16 @@ const router = createBrowserRouter([
   // admin routes
   {
     path: '/dashboard',
-    element: <Dashboard></Dashboard>,
+    element: <Dashboard />,
     children: [
+      {
+        path: '/dashboard/login',
+        element: <Login />,
+      },
+      {
+        path: '/dashboard/register',
+        element: <Register />,
+      },
       {
         path: '/dashboard',
         element: <AllProducts />,
@@ -89,6 +100,10 @@ const router = createBrowserRouter([
         element: <EditProduct />,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/v1/allproducts/${params.id}`),
+      },
+      {
+        path: '/dashboard/user-details',
+        element: <UserDetails />,
       },
 
       // order routes
