@@ -6,17 +6,25 @@ import Shop from '../pages/Shop';
 import Cart from '../pages/Cart';
 import Checkout from '../pages/Checkout';
 import SingleProduct from '../pages/SingleProduct';
+import Blog from '../pages/Blog';
+import SingleBlog from '../pages/SingleBlog';
+import Contact from '../pages/Contact';
 
 // admin routes
 import Dashboard from '../admin/pages/Dashboard';
 import AddProduct from '../admin/pages/AddProduct';
 import EditProduct from '../admin/pages/EditProduct';
 import AllProducts from '../admin/pages/AllProducts';
+// order routes
 import OrderDetails from '../admin/pages/OrderDetails';
 import OrderCompleted from '../admin/pages/OrderCompleted';
 import OrderOnHold from '../admin/pages/OrderOnHold';
 import OrderProcessing from '../admin/pages/OrderProcessing';
 import EditOrder from '../admin/pages/EditOrder';
+// blog routes
+import AllBlogs from '../admin/pages/AllBlogs';
+import AddBlog from '../admin/pages/AddBlog';
+import EditBlog from '../admin/pages/EditBlog';
 
 const router = createBrowserRouter([
   {
@@ -25,9 +33,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home></Home>,
+        element: <Home />,
       },
-
       {
         path: '/shop',
         element: <Shop />,
@@ -45,6 +52,18 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element: <Cart />,
+      },
+      {
+        path: '/blog',
+        element: <Blog />,
+      },
+      {
+        path: '/blog/:id',
+        element: <SingleBlog />,
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
       },
     ],
   },
@@ -71,6 +90,8 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/v1/allproducts/${params.id}`),
       },
+
+      // order routes
       {
         path: '/dashboard/order-details',
         element: <OrderDetails />,
@@ -90,6 +111,20 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/edit-order/:id',
         element: <EditOrder />,
+      },
+
+      //blog routes
+      {
+        path: '/dashboard/all-blogs',
+        element: <AllBlogs />,
+      },
+      {
+        path: '/dashboard/add-blog',
+        element: <AddBlog />,
+      },
+      {
+        path: '/dashboard/edit-blog/:id',
+        element: <EditBlog />,
       },
     ],
   },

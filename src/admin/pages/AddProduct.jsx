@@ -303,6 +303,7 @@ const AddProduct = () => {
               type="file"
               name="gallery_image"
               accept="image/png, image/gif, image/jpeg"
+              multiple
             />
           </div>
           <div className="mt-12">

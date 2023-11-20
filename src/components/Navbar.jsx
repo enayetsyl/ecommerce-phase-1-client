@@ -13,12 +13,12 @@ const Navbar = () => {
   const [open, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-white shadow w-full text-4xl relative py-3">
+    <div className="bg-white shadow w-full text-4xl relative py-3 font-[poppins]">
       <div className="container">
-        <div className="flex justify-between items-center">
+        <div className="grid grid-cols-3">
           {/* nav */}
           {/* desktop navigation */}
-          <div className="hidden md:block">
+          <div className="hidden lg:flex items-center">
             <ul className="flex gap-x-6 text-base uppercase">
               <Link
                 to="/"
@@ -53,30 +53,32 @@ const Navbar = () => {
             </ul>
           </div>
           {/* mobile navigation hamburger menu */}
-          <div className="block md:hidden">
+          <div className="flex items-center lg:hidden">
             <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
               <GiHamburgerMenu />
             </div>
           </div>
           {/* logo */}
-          <div>
+          <div className="flex justify-center items-center">
             <img src={logo} alt="" className="max-w-[100px]" />
           </div>
           {/* cart */}
-          <Link
-            to="/cart"
-            className="text-xl flex items-center gap-1 hover:text-sky-700 duration-500"
-          >
-            <p className="text-base font-bold">$1999</p>
-            <FaShoppingBasket />
-          </Link>
+          <div className="flex justify-end items-center gap-x-4">
+            <Link
+              to="/cart"
+              className="text-xl flex gap-1 items-center hover:text-sky-700 duration-500 whitespace-nowrap"
+            >
+              <p className="text-base font-bold">$1999</p>
+              <FaShoppingBasket />
+            </Link>
+          </div>
         </div>
       </div>
       {/* mobile navigation */}
       <div
         className={`${
-          open ? 'translate-x-0' : 'translate-x-full'
-        } block md:hidden transition duration-200 absolute h-screen w-screen bg-white top-0 left-0 z-50`}
+          open ? 'translate-x-0' : '-translate-x-full'
+        } block lg:hidden transition duration-200 absolute h-screen w-screen bg-white top-0 left-0 z-50`}
       >
         <div
           className="absolute top-4 right-5 cursor-pointer"
