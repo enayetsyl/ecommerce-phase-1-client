@@ -20,7 +20,8 @@ const AdminTable = () => {
           console.log('axios get error', error);
           throw error;
         }),
-  });
+      });
+      console.log(data)
 
   const handleDelete = (id) => {
     swal({
