@@ -50,8 +50,8 @@ const AddProduct = () => {
       // Rest of your code to handle other form fields and send the product data to your server
       const title = formData.get('title');
       const category = formData.get('category');
-      const regular_price = parseFloat(formData.get('rprice'));
-      const sale_price = parseFloat(formData.get('sprice'));
+      const rprice = parseFloat(formData.get('rprice'));
+      const sprice = parseFloat(formData.get('sprice'));
       const desc = formData.get('desc');
       const sizeCheckboxes = Array.from(e.target.querySelectorAll('input[name^="size"]:checked')).map((checkbox) => checkbox.value);
     const colorCheckboxes = Array.from(e.target.querySelectorAll('input[name^="color"]:checked')).map((checkbox) => checkbox.value);
@@ -59,8 +59,8 @@ const AddProduct = () => {
       const productData = {
         title,
         category,
-        regular_price,
-        sale_price,
+        rprice: rprice,
+        sprice: sprice,
         desc,
         featured_image: featuredImageRes.data.data.display_url,
         gallery_image: galleryImageRes.data.data.display_url,

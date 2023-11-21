@@ -3,8 +3,9 @@ import swal from 'sweetalert';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const EditProduct = () => {
-  const { category, desc, regular_price, sale_price, title, _id } =
+  const { category, desc, rprice, sprice, title, _id } =
     useLoaderData();
+    console.log(rprice, sprice)
   const axiosSecure = useAxiosSecure();
 
   const handleUpdate = async (e) => {
@@ -12,14 +13,14 @@ const EditProduct = () => {
     const formData = new FormData(e.target);
     const title = formData.get('title');
     const category = formData.get('category');
-    const regular_price = parseFloat(formData.get('regular_price'));
-    const sale_price = parseFloat(formData.get('sale_price'));
+    const rprice = parseFloat(formData.get('regular_price'));
+    const sprice = parseFloat(formData.get('sale_price'));
     const desc = formData.get('desc');
     const updatedProductData = {
       title,
       category,
-      regular_price,
-      sale_price,
+      rprice,
+      sprice,
       desc,
     };
     console.log(updatedProductData);
@@ -61,6 +62,7 @@ const EditProduct = () => {
                 placeholder="Your Product Title"
                 name="title"
                 className="input-with-shadow"
+                defaultValue={title}
                 required
               />
             </div>
@@ -74,6 +76,7 @@ const EditProduct = () => {
                 placeholder="Your Product Category"
                 className="input-with-shadow"
                 name="category"
+                defaultValue={category}
               />
             </div>
           </div>
@@ -89,6 +92,7 @@ const EditProduct = () => {
                 placeholder=" Regular Price"
                 name="rprice"
                 className="input-with-shadow"
+                defaultValue={rprice}
                 required
               />
             </div>
@@ -102,6 +106,7 @@ const EditProduct = () => {
                 placeholder=" Sale Price"
                 name="sprice"
                 className="input-with-shadow"
+                defaultValue={sprice}
                 required
               />
             </div>
@@ -236,6 +241,7 @@ const EditProduct = () => {
               name="desc"
               className="input-with-shadow"
               rows="4"
+              defaultValue={desc}
               required
             />
           </div>
