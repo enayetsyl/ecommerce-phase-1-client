@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
 import swal from 'sweetalert';
-import useAxios from '../../hooks/useAxios';
 import { GridLoader } from 'react-spinners';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AdminTable = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
   const { isLoading, data, refetch } = useQuery({
     queryKey: ['product'],
     queryFn: () =>
       axiosSecure
-        .get('/v1/allproducts')
+        .get('/api/v1/allproducts')
         .then((res) => {
           return res.data;
         })

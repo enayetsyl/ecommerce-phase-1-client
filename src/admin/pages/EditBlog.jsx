@@ -1,11 +1,11 @@
-import useAxios from '../../hooks/useAxios';
 import swal from 'sweetalert';
 import axios from 'axios';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 const VITE_IMAGE_HOSTING_KEY = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${VITE_IMAGE_HOSTING_KEY}`;
 
 const EditBlog = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure()
 
   const handleSubmit = async (e) => {
     e.preventDefault();

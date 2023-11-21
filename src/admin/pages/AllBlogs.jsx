@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
 import swal from 'sweetalert';
-import useAxios from '../../hooks/useAxios';
 import { GridLoader } from 'react-spinners';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const AllBlog = () => {
-  const axiosSecure = useAxios();
+  const axiosPublic = useAxiosPublic();
   const { isLoading, data, refetch } = useQuery({
     queryKey: ['product'],
     queryFn: () =>
-      axiosSecure
+      axiosPublic
         .get('/v1/allproducts')
         .then((res) => {
           return res.data;
@@ -31,7 +31,7 @@ const AllBlog = () => {
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
-        const res = await axiosSecure.delete(`/v1/allproducts/${id}`);
+        const res = await axiosPublic.delete(`/v1/allproducts/${id}`);
         // console.log(res.data);
         if (res.data.deletedCount > 0) {
           // refetch to update the ui

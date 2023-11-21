@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../hooks/useAxios';
 import Order from '../components/Order';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const OrderCompleted = () => {
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure()
   const { isLoading, data } = useQuery({
     queryKey: ['product'],
     queryFn: () =>

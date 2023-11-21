@@ -1,11 +1,11 @@
 import { useLoaderData } from 'react-router-dom';
-import useAxios from '../../hooks/useAxios';
 import swal from 'sweetalert';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const EditProduct = () => {
   const { category, desc, regular_price, sale_price, title, _id } =
     useLoaderData();
-  const axiosSecure = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const handleUpdate = async (e) => {
     e.preventDefault();
