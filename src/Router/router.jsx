@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         path: '/single-product/:id',
         element: <SingleProduct />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/v1/allproducts/${params.id}`),
+          fetch(`http://localhost:5000/api/v1/allproducts/${params.id}`),
       },
       {
         path: '/checkout',

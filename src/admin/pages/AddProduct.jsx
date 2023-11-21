@@ -45,9 +45,7 @@ const AddProduct = () => {
       );
       // console.log('Gallery Image URL:', galleryImageRes.data);
 
-      // Now you can use the image URLs or other data as needed
-
-      // Rest of your code to handle other form fields and send the product data to your server
+      
       const title = formData.get('title');
       const category = formData.get('category');
       const rprice = parseFloat(formData.get('rprice'));

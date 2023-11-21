@@ -5,13 +5,14 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
-  console.log(cartItems);
+  console.log(cartItems)
 
   const authInfo = {
     cartItems,
     setCartItems,
     total,
     setTotal,
+
   };
 
   return (

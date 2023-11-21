@@ -86,8 +86,8 @@ const AdminTable = () => {
                     {product.title}
                   </Table.Cell>
                   <Table.Cell>{product.category}</Table.Cell>
-                  <Table.Cell>${product.regular_price}</Table.Cell>
-                  <Table.Cell>${product.sale_price}</Table.Cell>
+                  <Table.Cell>${product.rprice}</Table.Cell>
+                  <Table.Cell>${product.sprice}</Table.Cell>
                   <Table.Cell>
                     <Link
                       to={`/dashboard/edit-product/${product._id}`}

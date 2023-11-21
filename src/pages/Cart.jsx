@@ -1,10 +1,28 @@
 import { Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
 
-import eight from '../assets/eight.png';
 
 const Cart = () => {
+  const [products, setProducts] = useState([])
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() => {
+    const storedProducts = JSON.parse(localStorage.getItem('cart')) || []
+    setProducts(storedProducts)
+
+    const sum = storedProducts.reduce((acc, product) => acc + (product.sprice * product.quantity), 0)
+    setTotalPrice(sum)
+  },[])
+
+  const handleDelete = (id) => {
+    console.log(id)
+    const remaining = products.filter(product => product._id !== id)
+    console.log(remaining)
+    localStorage.setItem('cart', JSON.stringify(remaining))
+    setProducts(remaining)
+  }
   return (
     <div className="my-12">
       <div className="container">
@@ -29,26 +47,38 @@ const Cart = () => {
                   <Table.HeadCell className="text-start">Total</Table.HeadCell>
                   <Table.HeadCell className="text-start">Remove</Table.HeadCell>
                 </Table.Head>
-                <Table.Body className="divide-y">
+               {
+                products.length > 0 ? (
+                  
+                    products.map(product => (
+                      <Table.Body className="divide-y"
+                      key={product._id}
+                      >
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell>
                       <img
-                        src={eight}
+                        src={product.featured_image}
                         alt=""
                         className="w-[80px] h-[80px] object-cover"
                       />
                     </Table.Cell>
                     <Table.Cell className=" font-bold text-gray-900 dark:text-white  max-w-[200px]">
-                      Traditional Cotton Panjabi
+                      {product.title}
                     </Table.Cell>
-                    <Table.Cell>3</Table.Cell>
-                    <Table.Cell>$1999</Table.Cell>
+                    <Table.Cell>{product.quantity}</Table.Cell>
+                    <Table.Cell>${product.sprice * [product.quantity]}</Table.Cell>
 
-                    <Table.Cell>
+                    <Table.Cell onClick={() => handleDelete(product._id)}>
                       <FaTrash className="text-red-500 cursor-pointer" />
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>
+                    ))
+                  
+                ) : (
+                  <p>Please go to cart. You have nothing to show here</p>
+                )
+               }
               </Table>
               <div>
                 <Link to="/shop">
@@ -66,7 +96,7 @@ const Cart = () => {
             <div className="black-shadow rounded-lg py-12 px-8">
               <div className="flex gap-4 justify-between">
                 <h5 className="font-bold text-2xl">Total</h5>
-                <h5 className="font-bold text-2xl">$1999</h5>
+                <h5 className="font-bold text-2xl">${totalPrice}</h5>
               </div>
               <Link to="/checkout">
                 <button
