@@ -23,8 +23,7 @@ const SingleProduct = () => {
     const updatedCart = [...existingCartItems, productToAdd]
 
     localStorage.setItem('cart', JSON.stringify(updatedCart))
-    // setCartItems((prevCartItems) => [...prevCartItems, productToAdd])
-    // console.log(productToAdd)
+
   }
 
   return (

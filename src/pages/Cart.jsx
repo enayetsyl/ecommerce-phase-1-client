@@ -22,6 +22,10 @@ const Cart = () => {
     console.log(remaining)
     localStorage.setItem('cart', JSON.stringify(remaining))
     setProducts(remaining)
+
+    const storedProducts = JSON.parse(localStorage.getItem('cart')) || []
+    const sum = storedProducts.reduce((acc, product) => acc + (product.sprice * product.quantity), 0)
+    setTotalPrice(sum)
   }
   return (
     <div className="my-12">

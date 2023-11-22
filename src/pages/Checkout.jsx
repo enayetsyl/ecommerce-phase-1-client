@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import swal from 'sweetalert';
 
 const Checkout = () => {
   const [userName, setUserName] = useState('');
@@ -12,6 +14,23 @@ const Checkout = () => {
   const [paymentTrxId, setPaymentTrxId] = useState('');
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
+
+  // backend code state and others
+  const [LSItems, setLSItems] = useState([])
+  const [total, setTotal] = useState(0)
+  const [shippingCost, setShippingCost] = useState(100)
+  const axiosSecure = useAxiosSecure();
+
+  useEffect(() => {
+    const storedProducts = JSON.parse(localStorage.getItem('cart')) || []
+    setLSItems(storedProducts)
+
+    const sum = storedProducts.reduce((acc, product) => acc + (product.sprice * product.quantity), 0)
+    const shippingCost = userDivision === 'Dhaka' ? 50 : 100;
+    setShippingCost(shippingCost)
+    const totalPrice = sum + shippingCost;
+    setTotal(totalPrice)
+  },[])
 
   // handle submit
   const handleSubmit = () => {
@@ -46,6 +65,37 @@ const Checkout = () => {
       setSuccess(true);
       setMessage('Order Placed Successfully!');
       // use backend code here
+
+      const checkOutData ={
+        name: userName,
+        email: userEmail,
+        phone: userPhone,
+        division: userDivision,
+        address: userAddress,
+        shippingCost: shippingCost,
+        totalPrice: total,
+        paymentMethod,
+        bkashNumber: paymentNumber,
+        bkashTrnID: paymentTrxId,
+        productDetails: LSItems,
+        date: new Date(),
+      }
+      console.log(checkOutData)
+      axiosSecure.post('/api/v1/order', checkOutData)
+      .then(response => {
+        if(response.data.insertedId){
+          swal(
+            'Congratulation!',
+            'We received your order',
+            'success'
+          );
+          localStorage.removeItem('cart')
+        }
+      })
+      .catch(error => {
+        console.log('axios post error', error)
+      })
+
     } else {
       setSuccess(false);
       setMessage(errorMessage);
@@ -173,28 +223,28 @@ const Checkout = () => {
                   <h5>Pricing</h5>
                 </div>
                 {/* single item */}
-                <div className="flex items-center justify-between gap-x-5 border-b py-6">
+                {
+                  LSItems.map(item => (
+                    <div className="flex items-center justify-between gap-x-5 border-b py-6 font-bold" key={item._id}>
                   <h5>
-                    Simple, Plain One Colored Panjabi - Black, Extra Large × 1
+                    <span>{item.title}</span> x <span>{item.quantity}</span> - <span className='capitalize'>Color: {item.choosenColor}</span>, <span className='capitalize'>Size: {item.choosenSize}</span> 
+                    
                   </h5>
-                  <h5 className="whitespace-nowrap">৳ 699</h5>
+                  <h5 className="whitespace-nowrap">৳ {item.sprice * item.quantity}</h5>
                 </div>
-                {/* single item */}
-                <div className="flex items-center justify-between gap-x-5 border-b py-6">
-                  <h5>Multi Color Plain Panjabi - Blue, Extra Large × 4</h5>
-                  <h5 className="whitespace-nowrap">৳ 1699</h5>
-                </div>
-
+                  ))
+                }
                 {/* shipping */}
                 <div className="flex items-center justify-between gap-x-5 border-b py-6">
                   <h5>Shipping</h5>
-                  <h5 className="whitespace-nowrap">৳ 00</h5>
+                  <h5 className="whitespace-nowrap">৳ {userDivision === 'Dhaka' ? 50 : 100}</h5>
+                 
                 </div>
                 {/* total */}
                 <div className="flex items-center justify-between gap-x-5 py-6 font-bold text-lg">
                   <h5>Total</h5>
                   <h5 className="whitespace-nowrap font-bold text-lg">
-                    ৳ 2000
+                    ৳ {total}
                   </h5>
                 </div>
               </div>
