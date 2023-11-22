@@ -81,6 +81,7 @@ const Checkout = () => {
         bkashTrnID: paymentTrxId,
         productDetails: LSItems,
         date: new Date(),
+        status:'On Hold Orders',
       }
       console.log(checkOutData)
       axiosSecure.post('/api/v1/order', checkOutData)

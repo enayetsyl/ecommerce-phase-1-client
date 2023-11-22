@@ -126,6 +126,8 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/edit-order/:id',
         element: <EditOrder />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/v1/allorders/${params.id}`),
       },
 
       //blog routes

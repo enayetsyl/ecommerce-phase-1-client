@@ -1,6 +1,9 @@
 import { Table } from 'flowbite-react';
+import { useLoaderData } from 'react-router-dom';
 
 const EditOrder = () => {
+  const OrderDetails = useLoaderData()
+  console.log(OrderDetails)
   return (
     <div className="py-12">
       <div className="container">

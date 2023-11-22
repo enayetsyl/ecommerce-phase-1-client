@@ -8,8 +8,9 @@ const OrderDetails = () => {
     queryKey: ['product'],
     queryFn: () =>
       axiosSecure
-        .get('/v1/allproducts')
+        .get('/api/v1/allorders')
         .then((res) => {
+          console.log(res.data)
           return res.data;
         })
         .catch((error) => {

@@ -8,7 +8,7 @@ const OrderOnHold = () => {
     queryKey: ['product'],
     queryFn: () =>
       axiosSecure
-        .get('/v1/allproducts')
+        .get('/api/v1/allorders')
         .then((res) => {
           return res.data;
         })
