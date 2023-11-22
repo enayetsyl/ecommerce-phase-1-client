@@ -142,6 +142,8 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/edit-blog/:id',
         element: <EditBlog />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/v1/allblogs/${params.id}`),
       },
     ],
   },

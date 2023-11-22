@@ -7,10 +7,8 @@ import swal from 'sweetalert';
 const EditOrder = () => {
   const orderDetails = useLoaderData()
   const {name, phone, division, address, paymentMethod, bkashNumber, bkashTrnID, _id, productDetails, status} = orderDetails;
-  console.log(orderDetails)
   const [selectedStatus, setSelectedStatus] = useState('')
   const axiosSecure = useAxiosSecure();
-  console.log(selectedStatus)
   const handleStatusChange = async (e) => {
     e.preventDefault()
     const updateData = {

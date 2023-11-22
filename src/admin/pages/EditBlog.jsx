@@ -1,18 +1,19 @@
 import swal from 'sweetalert';
 import axios from 'axios';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { useLoaderData } from 'react-router-dom';
 const VITE_IMAGE_HOSTING_KEY = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${VITE_IMAGE_HOSTING_KEY}`;
 
 const EditBlog = () => {
   const axiosSecure = useAxiosSecure()
-
+  const blogDetails = useLoaderData();
+  console.log(blogDetails)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const featuredImage = formData.get('featured_image');
-    const galleryImage = formData.get('gallery_image');
 
     try {
       // Upload featured image
@@ -30,55 +31,24 @@ const EditBlog = () => {
       );
       // console.log('Featured Image URL:', featuredImageRes.data);
 
-      // Upload gallery image
-      const galleryImageFormData = new FormData();
-      galleryImageFormData.append('image', galleryImage);
 
-      const galleryImageRes = await axios.post(
-        image_hosting_api,
-        galleryImageFormData,
-        {
-          headers: {
-            'content-type': 'multipart/form-data',
-          },
-        }
-      );
-      // console.log('Gallery Image URL:', galleryImageRes.data);
+      const blogTitle = formData.get('title');
+      const blog = formData.get('desc');
 
-      // Now you can use the image URLs or other data as needed
-
-      // Rest of your code to handle other form fields and send the product data to your server
-      const title = formData.get('title');
-      const category = formData.get('category');
-      const regular_price = parseFloat(formData.get('regular_price'));
-      const sale_price = parseFloat(formData.get('sale_price'));
-      const desc = formData.get('desc');
-
-      const productData = {
-        title,
-        category,
-        regular_price,
-        sale_price,
-        desc,
+      const updatedBlogData = {
+        blogTitle,
+        blog,
         featured_image: featuredImageRes.data.data.display_url,
-        gallery_image: galleryImageRes.data.data.display_url,
       };
-      console.log(productData);
-      // Send product data to your server
-      axiosSecure
-        .post('/v1/addproduct', productData)
-        .then((response) => {
-          if (response.data.insertedId) {
-            swal(
-              'Congratulation!',
-              'You successfully added a product!',
-              'success'
-            );
-          }
-        })
-        .catch((error) => {
-          console.log('axios post error', error);
-        });
+      console.log(updatedBlogData);
+      // Send blog data to your server
+      const updateBlog = await axiosSecure
+        .patch('/api/v1/allblogs', updatedBlogData)
+       {
+        if(updateBlog.data.modifiedCount > 0) {
+          swal("Congratulation!", "Your blog updated successfully!", "success");
+        }
+       }
     } catch (error) {
       console.error('Error uploading image:', error);
     }
@@ -106,6 +76,7 @@ const EditBlog = () => {
                 name="title"
                 className="input-with-shadow"
                 required
+                defaultValue={blogDetails.blogTitle}
               />
             </div>
           </div>
@@ -122,6 +93,7 @@ const EditBlog = () => {
               name="desc"
               className="input-with-shadow"
               rows="4"
+              defaultValue={blogDetails.blog}
               required
             />
           </div>

@@ -9,10 +9,10 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 const AllBlog = () => {
   const axiosPublic = useAxiosPublic();
   const { isLoading, data, refetch } = useQuery({
-    queryKey: ['product'],
+    queryKey: ['blog'],
     queryFn: () =>
       axiosPublic
-        .get('/v1/allproducts')
+        .get('/api/v1/allblogs')
         .then((res) => {
           return res.data;
         })
@@ -31,7 +31,7 @@ const AllBlog = () => {
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
-        const res = await axiosPublic.delete(`/v1/allproducts/${id}`);
+        const res = await axiosPublic.delete(`/api/v1/allblogs/${id}`);
         // console.log(res.data);
         if (res.data.deletedCount > 0) {
           // refetch to update the ui
@@ -66,24 +66,25 @@ const AllBlog = () => {
               <Table.HeadCell className="text-start">Delete</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
-              {data.map((product) => (
+              {data.map((blog) => (
                 <Table.Row
                   className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                  key={product._id}
+                  key={blog._id}
                 >
                   <Table.Cell>
                     <img
-                      src={product.featured_image}
+                      src={blog.featured_image}
                       alt=""
                       className="w-[80px] h-[80px] object-cover"
                     />
                   </Table.Cell>
                   <Table.Cell className="whitespace-nowrap font-bold text-gray-900 dark:text-white">
-                    {product.title}
+                    {blog.blogTitle
+}
                   </Table.Cell>
                   <Table.Cell>
                     <Link
-                      to={`/dashboard/edit-product/${product._id}`}
+                      to={`/dashboard/edit-blog/${blog._id}`}
                       className="cursor-pointer hover:text-blue-800"
                     >
                       <FaEdit />
@@ -92,7 +93,7 @@ const AllBlog = () => {
                   <Table.Cell>
                     <FaTrash
                       className="text-red-500 cursor-pointer"
-                      onClick={() => handleDelete(product._id)}
+                      onClick={() => handleDelete(blog._id)}
                     />
                   </Table.Cell>
                 </Table.Row>

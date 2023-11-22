@@ -8,7 +8,7 @@ const OrderCompleted = () => {
     queryKey: ['product'],
     queryFn: () =>
       axiosSecure
-        .get('/v1/allproducts')
+        .get('/api/v1/allorders')
         .then((res) => {
           return res.data;
         })
@@ -17,8 +17,10 @@ const OrderCompleted = () => {
           throw error;
         }),
   });
+  const completeOrders = data?.filter(completeOrder => completeOrder.status === "Completed")
+  console.log(completeOrders)
 
-  return <Order isLoading={isLoading} data={data} title="Completed Orders" />;
+  return <Order isLoading={isLoading} data={completeOrders} title="Completed Orders" />;
 };
 
 export default OrderCompleted;

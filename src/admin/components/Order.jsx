@@ -36,13 +36,13 @@ const Order = ({ isLoading, data , title  }) => {
                     <h4
                       className={`py-2 px-3 text-center inline-block rounded-full font-bold text-base text-white bg-blue-500 ${
                         order.status === 'On Hold Orders' && 'bg-red-500'
-                      } ${order.status === 'Processing Orders' && 'bg-blue-500'} ${
-                        order.status === 'Completed Orders' && 'bg-green-500'
+                      } ${order.status === 'processing' && 'bg-blue-500'} ${
+                        order.status === 'Completed' && 'bg-green-500'
                       }`}
                     >
                       {order.status === 'On Hold Orders' && 'On Hold'}
-                      {order.status === 'Processing Orders' && 'Processing'}
-                      {order.status === 'Completed Orders' && 'Completed'}
+                      {order.status === 'processing' && 'Processing'}
+                      {order.status === 'Completed' && 'Completed'}
                     </h4>
                   </Table.Cell>
                   <Table.Cell className="whitespace-nowrap font-bold text-gray-900 dark:text-white">

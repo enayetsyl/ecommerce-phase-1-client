@@ -8,7 +8,7 @@ const OrderProcessing = () => {
     queryKey: ['product'],
     queryFn: () =>
       axiosSecure
-        .get('/v1/allproducts')
+        .get('/api/v1/allorders')
         .then((res) => {
           return res.data;
         })
@@ -18,7 +18,10 @@ const OrderProcessing = () => {
         }),
   });
 
-  return <Order isLoading={isLoading} data={data} title="Processing Orders" />;
+  const onProcessingOrders = data?.filter(onProcessingOrder => onProcessingOrder.status === "processing")
+  console.log(onProcessingOrders)
+
+  return <Order isLoading={isLoading} data={onProcessingOrders} title="Processing Orders" />;
 };
 
 export default OrderProcessing;

@@ -12,7 +12,7 @@ const AddBlog = () => {
 
     const formData = new FormData(e.target);
     const featuredImage = formData.get('featured_image');
-    const galleryImage = formData.get('gallery_image');
+
 
     try {
       // Upload featured image
@@ -28,50 +28,26 @@ const AddBlog = () => {
           },
         }
       );
-      // console.log('Featured Image URL:', featuredImageRes.data);
+      
+      
+      const blogTitle = formData.get('title');
+      const blog = formData.get('desc');
 
-      // Upload gallery image
-      const galleryImageFormData = new FormData();
-      galleryImageFormData.append('image', galleryImage);
-
-      const galleryImageRes = await axios.post(
-        image_hosting_api,
-        galleryImageFormData,
-        {
-          headers: {
-            'content-type': 'multipart/form-data',
-          },
-        }
-      );
-      // console.log('Gallery Image URL:', galleryImageRes.data);
-
-      // Now you can use the image URLs or other data as needed
-
-      // Rest of your code to handle other form fields and send the product data to your server
-      const title = formData.get('title');
-      const category = formData.get('category');
-      const regular_price = parseFloat(formData.get('regular_price'));
-      const sale_price = parseFloat(formData.get('sale_price'));
-      const desc = formData.get('desc');
-
-      const productData = {
-        title,
-        category,
-        regular_price,
-        sale_price,
-        desc,
+      const blogData = {
+        blogTitle,
+        blog,
         featured_image: featuredImageRes.data.data.display_url,
-        gallery_image: galleryImageRes.data.data.display_url,
+   
       };
-      console.log(productData);
+      console.log(blogData);
       // Send product data to your server
       axiosSecure
-        .post('/v1/addproduct', productData)
+        .post('/api/v1/addblog', blogData)
         .then((response) => {
           if (response.data.insertedId) {
             swal(
               'Congratulation!',
-              'You successfully added a product!',
+              'You successfully added a blog post!',
               'success'
             );
           }
