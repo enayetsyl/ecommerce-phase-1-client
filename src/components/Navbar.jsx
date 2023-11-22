@@ -1,16 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FaShoppingBasket } from 'react-icons/fa';
 
 import logo from '../assets/logo.png';
+import useAuth from '../hooks/useAuth';
 
 const Navbar = () => {
   const { pathname } = useLocation();
 
   const [active, setActive] = useState(pathname);
   const [open, setIsOpen] = useState(false);
+
+  const {total} = useAuth();
+  // const [totalPrice, setTotalPrice] = useState(0)
+
+  // useEffect(() => {
+  //   const storedProducts = JSON.parse(localStorage.getItem('cart')) || []
+
+  //   const sum = storedProducts.reduce((acc, product) => acc + (product.sprice * product.quantity), 0)
+  //   setTotalPrice(sum)
+  // },[])
 
   return (
     <div className="bg-white shadow w-full text-4xl relative py-3 font-[poppins]">
@@ -68,7 +79,7 @@ const Navbar = () => {
               to="/cart"
               className="text-xl flex gap-1 items-center hover:text-sky-700 duration-500 whitespace-nowrap"
             >
-              <p className="text-base font-bold">$1999</p>
+              <p className="text-base font-bold">${total}</p>
               <FaShoppingBasket />
             </Link>
           </div>

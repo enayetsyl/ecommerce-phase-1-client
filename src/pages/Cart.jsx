@@ -2,11 +2,13 @@ import { Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
+import useAuth from '../hooks/useAuth';
 
 
 const Cart = () => {
   const [products, setProducts] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
+  const {setTotal} = useAuth()
 
   useEffect(() => {
     const storedProducts = JSON.parse(localStorage.getItem('cart')) || []
@@ -14,7 +16,8 @@ const Cart = () => {
 
     const sum = storedProducts.reduce((acc, product) => acc + (product.sprice * product.quantity), 0)
     setTotalPrice(sum)
-  },[])
+    setTotal(sum)
+  },[setTotal])
 
   const handleDelete = (id) => {
     console.log(id)
@@ -26,6 +29,7 @@ const Cart = () => {
     const storedProducts = JSON.parse(localStorage.getItem('cart')) || []
     const sum = storedProducts.reduce((acc, product) => acc + (product.sprice * product.quantity), 0)
     setTotalPrice(sum)
+    setTotal(sum)
   }
   return (
     <div className="my-12">
