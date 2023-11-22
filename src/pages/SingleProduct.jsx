@@ -95,7 +95,7 @@ const SingleProduct = () => {
                       Select Size
                     </option>
                     {
-                      size.map((sizeOption, index) => (
+                      size?.map((sizeOption, index) => (
                         <option  className="text-gray-700 py-3"
                         key={index}
                         value={sizeOption}
@@ -122,7 +122,7 @@ const SingleProduct = () => {
                       Select Color
                     </option>
                    {
-                    color.map((colorOption, index) => (
+                    color?.map((colorOption, index) => (
                       <option className="text-gray-700 py-3"
                       key={index}
                       value={colorOption}

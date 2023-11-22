@@ -43,7 +43,7 @@ const EditBlog = () => {
       console.log(updatedBlogData);
       // Send blog data to your server
       const updateBlog = await axiosSecure
-        .patch('/api/v1/allblogs', updatedBlogData)
+        .patch(`/api/v1/allblogs/${blogDetails._id}`, updatedBlogData)
        {
         if(updateBlog.data.modifiedCount > 0) {
           swal("Congratulation!", "Your blog updated successfully!", "success");

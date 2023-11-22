@@ -63,6 +63,8 @@ const router = createBrowserRouter([
       {
         path: '/blog/:id',
         element: <SingleBlog />,
+        loader: ({ params }) =>
+        fetch(`http://localhost:5000/api/v1/allblogs/${params.id}`),
       },
       {
         path: '/contact',
@@ -145,6 +147,7 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/v1/allblogs/${params.id}`),
       },
+     
     ],
   },
 ]);
