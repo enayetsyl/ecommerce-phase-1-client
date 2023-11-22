@@ -1,9 +1,28 @@
 import { Table } from 'flowbite-react';
+import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import swal from 'sweetalert';
 
 const EditOrder = () => {
-  const OrderDetails = useLoaderData()
-  console.log(OrderDetails)
+  const orderDetails = useLoaderData()
+  const {name, phone, division, address, paymentMethod, bkashNumber, bkashTrnID, _id, productDetails, status} = orderDetails;
+  console.log(orderDetails)
+  const [selectedStatus, setSelectedStatus] = useState('')
+  const axiosSecure = useAxiosSecure();
+  console.log(selectedStatus)
+  const handleStatusChange = async (e) => {
+    e.preventDefault()
+    const updateData = {
+      status: selectedStatus,
+    }
+   const updatedItem = await axiosSecure.patch(`/api/v1/order/${_id}`, updateData)
+   {
+    if(updatedItem.data.modifiedCount > 0){
+      swal("Congratulation!", "Your order status updated successfully!", "success");
+    }
+   }
+  }
   return (
     <div className="py-12">
       <div className="container">
@@ -13,13 +32,14 @@ const EditOrder = () => {
         <div className="black-shadow my-12 py-12 px-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-start mb-12 gap-4">
             <h3 className="font-bold text-2xl md:text-3xl">
-              Order Number: #3122
+              Order Number: {_id}
             </h3>
             <form className="flex justify-center">
               <select
                 name="order-status"
                 required
                 className="border-0 text-2xl font-bold !focus:outline-0 order-select"
+                onChange={(e) => setSelectedStatus(e.target.value)}
               >
                 <option value="onHold" className="text-gray-700 py-3">
                   On Hold
@@ -32,7 +52,7 @@ const EditOrder = () => {
                 </option>
               </select>
               <button
-                type="submit"
+                onClick={(e) => handleStatusChange(e)}
                 className="bg-black text-white font-base uppercase font-bold p-3 hover:translate-y-2 duration-500 rounded"
               >
                 Change Status
@@ -41,38 +61,38 @@ const EditOrder = () => {
           </div>
 
           <div className="flex flex-col gap-y-3">
-            <h4 className="text-2xl font-black mb-4">Status: Processing</h4>
+            <h4 className="text-2xl font-black mb-4">Status: {status}</h4>
             <h5 className="form-label">
               Customer Name:
-              <span className="text-lg font-medium"> Shafayetur Rahman</span>
+              <span className="text-lg font-medium"> {name}</span>
             </h5>
             <h5 className="form-label">
               Phone:
-              <span className="text-lg font-medium"> 01638719578</span>
+              <span className="text-lg font-medium"> {phone}</span>
             </h5>
             <h5 className="form-label">
               Division:
-              <span className="text-lg font-medium"> Dhaka</span>
+              <span className="text-lg font-medium"> {division}</span>
             </h5>
             <h5 className="form-label">
               District:
-              <span className="text-lg font-medium"> Dhaka</span>
+              <span className="text-lg font-medium"> {division}</span>
             </h5>
             <h5 className="form-label">
               Address:
-              <span className="text-lg font-medium"> road no 55</span>
+              <span className="text-lg font-medium"> {address}</span>
             </h5>
             <h5 className="form-label">
               Shipping Method:
-              <span className="text-lg font-medium"> Bkash</span>
+              <span className="text-lg font-medium"> {paymentMethod}</span>
             </h5>
             <h5 className="form-label">
               Payment Number:
-              <span className="text-lg font-medium"> 01633154215</span>
+              <span className="text-lg font-medium"> {bkashNumber}</span>
             </h5>
             <h5 className="form-label">
               TrxID:
-              <span className="text-lg font-medium"> 82C15W38</span>
+              <span className="text-lg font-medium"> {bkashTrnID}</span>
             </h5>
             <div className="mt-6 overflow-auto">
               <Table striped>
@@ -86,22 +106,23 @@ const EditOrder = () => {
 
                   <Table.HeadCell className="text-start">Total</Table.HeadCell>
                 </Table.Head>
-                <Table.Body className="divide-y">
+               {
+                productDetails.map((product, index) => (
+                  <Table.Body className="divide-y"
+                  key={index}
+                  >
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="whitespace-nowrap font-bold text-gray-900 dark:text-white">
-                      Simple, Plain One Colored Panjabi - Black, Extra Small
+                     {product.title} - {product.choosenSize}, {product.choosenColor}
+                      
                     </Table.Cell>
-                    <Table.Cell>5</Table.Cell>
-                    <Table.Cell>$1990</Table.Cell>
+                    <Table.Cell>{product.quantity}</Table.Cell>
+                    <Table.Cell>${product.sprice * product.quantity}</Table.Cell>
                   </Table.Row>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell className="whitespace-nowrap font-bold text-gray-900 dark:text-white">
-                      Simple, Plain One Colored Panjabi - Black, Extra Small
-                    </Table.Cell>
-                    <Table.Cell>5</Table.Cell>
-                    <Table.Cell>$1990</Table.Cell>
-                  </Table.Row>
+                
                 </Table.Body>
+                ))
+               }
               </Table>
             </div>
           </div>
