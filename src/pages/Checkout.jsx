@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
   const [userName, setUserName] = useState('');
@@ -20,6 +21,7 @@ const Checkout = () => {
   const [total, setTotal] = useState(0)
   const [shippingCost, setShippingCost] = useState(100)
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedProducts = JSON.parse(localStorage.getItem('cart')) || []
@@ -63,7 +65,7 @@ const Checkout = () => {
 
     if (valid) {
       setSuccess(true);
-      setMessage('Order Placed Successfully!');
+      // setMessage('Order Placed Successfully!');
       // use backend code here
 
       const checkOutData ={
@@ -90,6 +92,7 @@ const Checkout = () => {
             'success'
           );
           localStorage.removeItem('cart')
+          navigate('/shop')
         }
       })
       .catch(error => {
